@@ -17,10 +17,6 @@ A state-of-the-art content management interface built with **React**, **TypeScri
 *   **One-Click Editing**: Simply click on any existing equation to open the math editor and modify the LaTeX live.
 *   **Automatic Rendering**: Uses standard `math-span` elements that are automatically typeset into beautiful math notation.
 
-### 3. Data Management (Supabase)
-*   **Cloud Persistence**: Save and retrieve your documents instantly using Supabase.
-*   **Environment-Ready**: Ready-to-use configuration for Supabase integration.
-
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -40,14 +36,7 @@ A state-of-the-art content management interface built with **React**, **TypeScri
     npm install
     ```
 
-3.  **Set up environment variables**:
-    Create a `.env` file in the root directory and add your Supabase credentials:
-    ```env
-    VITE_SUPABASE_URL=your_supabase_url
-    VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-    ```
-
-4.  **Launch development server**:
+3.  **Launch development server**:
     ```bash
     npm run dev
     ```
@@ -58,7 +47,6 @@ A state-of-the-art content management interface built with **React**, **TypeScri
 *   **Rich Text**: CKEditor 4
 *   **Math Rendering**: MathLive
 *   **Styling**: TailwindCSS, Lucide-React
-*   **Backend**: Supabase
 
 ## 📖 How to Use the Math Editor
 
