@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/ck4-mathlive.github.io/',
+  base: '/ck4-mathlive.github.io',
   plugins: [react()],
   optimizeDeps: {
     exclude: ['lucide-react'],
