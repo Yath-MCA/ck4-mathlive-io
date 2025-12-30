@@ -1,0 +1,22 @@
+[
+    {
+        "title": "Quadratic Equation Study",
+        "content": "<h2>Solving Quadratic Equations</h2><p>A quadratic equation is of the form:</p><p><span class=\"math-span\">ax^2 + bx + c = 0</span></p><p>The solutions are given by the quadratic formula:</p><p><span class=\"math-span\">x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}</span></p>"
+    },
+    {
+        "title": "Pythagorean Theorem",
+        "content": "<h2>The Pythagorean Theorem</h2><p>In a right-angled triangle, the square of the hypotenuse is equal to the sum of the squares of the other two sides:</p><p><span class=\"math-span\">a^2 + b^2 = c^2</span></p><p>For example, if <span class=\"math-span\">a=3</span> and <span class=\"math-span\">b=4</span>, then <span class=\"math-span\">c = \\sqrt{3^2 + 4^2} = \\sqrt{9 + 16} = \\sqrt{25} = 5</span>.</p>"
+    },
+    {
+        "title": "Calculus Basics",
+        "content": "<h2>Basic Derivatives</h2><p>The derivative of a power function is given by:</p><p><span class=\"math-span\">\\frac{d}{dx} x^n = nx^{n-1}</span></p><p>The fundamental theorem of calculus states:</p><p><span class=\"math-span\">\\int_a^b f(x) dx = F(b) - F(a)</span></p>"
+    },
+    {
+        "title": "Trigonometric Identities",
+        "content": "<h2>Essential Trigonometry</h2><p>One of the most important identities is:</p><p><span class=\"math-span\">\\sin^2(\\theta) + \\cos^2(\\theta) = 1</span></p><p>Also, the law of sines:</p><p><span class=\"math-span\">\\frac{a}{\\sin A} = \\frac{b}{\\sin B} = \\frac{c}{\\sin C}</span></p>"
+    },
+    {
+        "title": "Physics: Special Relativity",
+        "content": "<h2>Mass-Energy Equivalence</h2><p>Albert Einstein's famous equation relates energy and mass:</p><p><span class=\"math-span\">E = mc^2</span></p><p>The Lorentz factor is defined as:</p><p><span class=\"math-span\">\\gamma = \\frac{1}{\\sqrt{1 - \\frac{v^2}{c^2}}}</span></p>"
+    }
+]
