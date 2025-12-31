@@ -14,6 +14,9 @@ export const ckeditorConfig = {
         'https://unpkg.com/mathlive@0.95.5/dist/mathlive-static.css',
         '/ck4-mathlive-io/editor.css'
     ],
+    mathLive: {
+        outputFormat: 'mathml',
+    },
     toolbar: [
         { name: 'document', items: ['Source'] },
         { name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'Undo', 'Redo'] },

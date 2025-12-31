@@ -6,5 +6,6 @@ declare global {
         CKEDITOR: any;
         MathLive: any;
         TeXZilla: any;
+        usedMathIds: Array<string>;
     }
 }

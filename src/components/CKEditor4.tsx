@@ -87,7 +87,7 @@ const CKEditor4 = ({ initialData, onChange, onReady }: CKEditor4Props) => {
                 });
 
                 editor.on('dataReady', () => {
-                    renderAllMathInEditor(editor);
+                    renderAllMathInEditor(editor, "");
                 });
 
                 // MathLive Integration

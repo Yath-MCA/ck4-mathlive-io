@@ -1,4 +1,4 @@
-import { renderLatex } from '../lib/mathRenderer';
+import { renderLatex, renderAllMathInEditor } from '../lib/mathRenderer';
 
 export const openMathDialog = (editor: any, initialLatex = '', targetElement: any = null) => {
     const overlay = document.createElement('div');
@@ -54,45 +54,59 @@ export const openMathDialog = (editor: any, initialLatex = '', targetElement: an
 
     const handleSave = () => {
         const latex = mf.value;
-        if (latex) {
-            if (targetElement) {
-                const renderedHtml = renderLatex(latex);
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = renderedHtml;
-                const newContent = tempDiv.firstChild as HTMLElement;
+        if (!latex) {
+            overlay.remove();
+            return;
+        }
 
-                // Copy attributes if necessary
-                if (newContent) {
-                    targetElement.setHtml(newContent.innerHTML);
-                    // Update attributes on the actual targetElement in CKEditor
-                    // targetElement.setAttribute('class', newContent.className);
-                    // targetElement.setAttribute('data-latex', latex);
-                    const mathML: Node = window.TeXZilla.toMathML(latex);
+        // ─────────────────────────────────────────────
+        // Edit existing math
+        // ─────────────────────────────────────────────
+        if (targetElement) {
+            const { html, id } = renderLatex(latex);
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
 
-                    const next = targetElement.$.nextSibling;
-
-                    if (next && next.nodeType === Node.ELEMENT_NODE && (next as HTMLElement).tagName.toLowerCase() === 'math') {
-                        next.remove();
-                        targetElement.$.parentNode?.insertBefore(mathML, targetElement.$);
-                    }
-                }
-            } else {
-                const renderedHtml = renderLatex(latex);
-                editor.insertHtml(renderedHtml);
+            const newContent = tempDiv.firstElementChild as HTMLElement | null;
+            if (!newContent) {
+                overlay.remove();
+                return;
             }
 
-            setTimeout(() => {
-                if (window.MathLive) {
-                    import('../config/mathConfig').then(({ mathConfig }) => {
-                        if (mathConfig.outputFormat === 'mathlive') {
-                            // window.MathLive.renderMathInDocument();
-                        }
-                    });
-                }
-            }, 100);
+            // Update CKEditor element content
+            targetElement.setHtml(newContent.innerHTML);
+            const _id: string = targetElement.getAttribute('id');
+            renderAllMathInEditor(editor, _id);
         }
+
+        // ─────────────────────────────────────────────
+        // Insert new math
+        // ─────────────────────────────────────────────
+        else {
+            const { html, id } = renderLatex(latex);
+
+            setTimeout(() => {
+                editor.insertHtml(html);
+                renderAllMathInEditor(editor, id);
+            }, 299);
+        }
+
+        // ─────────────────────────────────────────────
+        // Optional MathLive rendering
+        // ─────────────────────────────────────────────
+        setTimeout(() => {
+            if (window.MathLive) {
+                import('../config/mathConfig').then(({ mathConfig }) => {
+                    if (mathConfig.outputFormat === 'mathlive') {
+                        // window.MathLive.renderMathInDocument(editor.document.getBody().$);
+                    }
+                });
+            }
+        }, 500);
+
         overlay.remove();
     };
+
 
     okBtn.onclick = handleSave;
 
