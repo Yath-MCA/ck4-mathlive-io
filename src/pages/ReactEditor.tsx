@@ -52,7 +52,7 @@ function ReactEditor({ onNavigate }: ReactEditorProps) {
         <div className="max-w-4xl mx-auto">
           <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
             <h1 className="text-3xl font-bold text-slate-900 mb-2">
-              CKEditor 4 + MathLive (React)
+              CKEditor 4 + MathLive + TeXZilla (React)
             </h1>
             <p className="text-slate-600">
               Standalone component-based editor with mathematical expressions
