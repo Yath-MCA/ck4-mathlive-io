@@ -1,21 +1,24 @@
 # Professional Collaborative CMS with Math Support
 
-A state-of-the-art content management interface built with **React**, **TypeScript**, and **CKEditor 4**, featuring advanced mathematical expression integration via **MathLive**.
+A state-of-the-art content management interface built with **React**, **TypeScript**, and **CKEditor 4**, featuring advanced mathematical expression integration via **MathLive** and **TeXZilla**.
 
 ![Editor Preview](https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=2000)
 
 ## 🌟 Key Features
 
-### 1. CKEditor 4 Integration
-*   **VanillaJS Implementation**: A low-level integration demonstrating direct DOM manipulation and CKEditor instance management.
-*   **React Implementation**: A modern, component-based approach using dedicated React wrappers.
-*   **Advanced Configuration**: Customized toolbar, allowed content rules, and disabled entity encoding for clean mathematical output.
+### 1. Hybrid Math Rendering Engine
+*   **MathLive Integration**: Interactive, visual math editing with a custom-built dialog.
+*   **TeXZilla Support**: Powerful server-less LaTeX-to-MathML and LaTeX-to-SVG conversion for high-performance rendering.
+*   **Flexible Output**: Supports multiple output formats including `mathlive` (interactive), `svg`, `png`, and pure `MathML`.
 
-### 2. Advanced Mathematical Support (MathLive)
-*   **Embedded Math**: Seamlessly insert high-quality mathematical formulas into your documents.
-*   **Interactive Math Editor**: A custom-built dialog powered by MathLive for effortless LaTeX input and visual editing.
-*   **One-Click Editing**: Simply click on any existing equation to open the math editor and modify the LaTeX live.
-*   **Automatic Rendering**: Uses standard `math-span` elements that are automatically typeset into beautiful math notation.
+### 2. CKEditor 4 Integration
+*   **VanillaJS & React Implementations**: Demonstrates both direct DOM manipulation and modern component-based approaches.
+*   **Advanced Click-to-Edit**: Detects clicks on rendered MathML, SVG, or hidden LaTeX spans to trigger the interactive editor seamlessly.
+*   **Dynamic Content Styling**: Custom CSS (`editor.css`) injected into the editor iframe for premium visuals during editing.
+
+### 3. Smart Rendering Logic
+*   **Automatic Typesetting**: Automatically scans and renders elements with `.tex`, `.math-span`, or `.math-div` classes.
+*   **Shadowing Prevention**: Robust DOM manipulation logic that safely handles multiple documents (main page + editor iframe).
 
 ## 🚀 Getting Started
 
@@ -28,7 +31,7 @@ A state-of-the-art content management interface built with **React**, **TypeScri
 1.  **Clone the repository**:
     ```bash
     git clone <repository-url>
-    cd project-bolt-sb1-w5rm5fie
+    cd ck4-mathlive-io
     ```
 
 2.  **Install dependencies**:
@@ -45,27 +48,27 @@ A state-of-the-art content management interface built with **React**, **TypeScri
 
 *   **Frontend**: React 18, TypeScript, Vite
 *   **Rich Text**: CKEditor 4
-*   **Math Rendering**: MathLive
-*   **Styling**: TailwindCSS, Lucide-React
+*   **Math Libraries**: MathLive, TeXZilla
+*   **Styling**: TailwindCSS, Vanilla CSS (Design Systems), Lucide-React
 
 ## 📖 How to Use the Math Editor
 
 1.  **Insert New Equation**:
-    *   Find the gold **"Insert Math"** button in the editor toolbar.
-    *   Type your LaTeX (e.g., `e^{i \pi} + 1 = 0`) in the visual math field.
+    *   Find the **"Insert Math"** button in the editor toolbar.
+    *   Type your LaTeX (e.g., `\int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2}`) in the visual math field.
     *   Click "Insert Equation".
 
 2.  **Edit Existing Equation**:
-    *   Hover and **click** any mathematical expression inside the editor.
-    *   The MathLive editor will open automatically with the current LaTeX.
+    *   **Click** any mathematical expression inside the editor (even after it has been rendered as MathML/SVG).
+    *   The MathLive editor will open automatically with the original LaTeX source.
     *   Make your changes and click "Update Equation".
 
 ## 🛡️ Best Practices Implemented
 
-*   **Type Safety**: Comprehensive TypeScript interfaces for all components and editor instances.
-*   **Performance**: Dynamic script loading for heavy editor libraries.
-*   **SEO & Semantics**: Semantic HTML5 structure with optimized meta headings.
-*   **UX/UI**: Premium, responsive design with smooth transitions and glassmorphism accents.
+*   **Type Safety**: Comprehensive TypeScript interfaces for all components, math configurations, and editor instances.
+*   **Cache Busting**: Automatic CSS cache management for editor styles.
+*   **Cross-Document Queries**: Advanced logic to bridge the gap between the main application and the CKEditor iframe.
+*   **SEO & Semantics**: Semantic HTML5 structure with optimized meta headings and ARIA-friendly math tags.
 
 ---
 
