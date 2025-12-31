@@ -1,3 +1,4 @@
+import { renderLatex } from '../lib/mathRenderer';
 
 export const openMathDialog = (editor: any, initialLatex = '', targetElement: any = null) => {
     const overlay = document.createElement('div');
@@ -56,20 +57,30 @@ export const openMathDialog = (editor: any, initialLatex = '', targetElement: an
         const latex = mf.value;
         if (latex) {
             if (targetElement) {
-                targetElement.setText(latex);
+                const renderedHtml = renderLatex(latex);
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = renderedHtml;
+                const newContent = tempDiv.firstChild as HTMLElement;
+
+                // Copy attributes if necessary
+                if (newContent) {
+                    targetElement.setHtml(newContent.innerHTML);
+                    // Update attributes on the actual targetElement in CKEditor
+                    targetElement.setAttribute('class', newContent.className);
+                    targetElement.setAttribute('data-latex', latex);
+                }
             } else {
-                const mathElement = `<span class="math-span">${window.CKEDITOR.tools.htmlEncode(latex)}</span>`;
-                editor.insertHtml(mathElement);
+                const renderedHtml = renderLatex(latex);
+                editor.insertHtml(renderedHtml);
             }
 
             setTimeout(() => {
                 if (window.MathLive) {
-                    window.MathLive.renderMathInDocument();
-                } else {
-                    // Fallback to dynamic import if not available globally
-                    import('https://esm.run/mathlive').then((mathlive) =>
-                        mathlive.renderMathInDocument()
-                    );
+                    import('../config/mathConfig').then(({ mathConfig }) => {
+                        if (mathConfig.outputFormat === 'mathlive') {
+                            window.MathLive.renderMathInDocument();
+                        }
+                    });
                 }
             }, 100);
         }

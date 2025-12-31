@@ -1,7 +1,8 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import { Home, FileText } from 'lucide-react';
 import CKEditor4 from '../components/CKEditor4';
 import mathExamples from '../data/mathExamples.json';
+import { renderNormalDOM } from '../lib/mathRenderer';
 
 interface VanillaJSEditorProps {
   onNavigate: (page: 'landing') => void;
@@ -19,6 +20,18 @@ function VanillaJSEditor({ onNavigate }: VanillaJSEditorProps) {
   const handleEditorReady = useCallback(() => {
     setIsLoading(false);
   }, []);
+
+  useEffect(() => {
+    // Wait for TeXZilla to be available if it's not yet
+    const timer = setInterval(() => {
+      if (window.TeXZilla) {
+        renderNormalDOM();
+        clearInterval(timer);
+      }
+    }, 100);
+    return () => clearInterval(timer);
+  }, []);
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-orange-50">
@@ -90,6 +103,13 @@ function VanillaJSEditor({ onNavigate }: VanillaJSEditorProps) {
                 <li>Enter your LaTeX expression (e.g., x^2 + y^2 = z^2)</li>
                 <li>The expression will be rendered beautifully in the editor</li>
               </ol>
+            </div>
+            <div className="mt-6 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+              <h3 className="font-semibold text-slate-900 mb-2">Texzila</h3>
+              <div>
+                <span className="tex">\int_a^b f(x) d x = F(b) - F(a)</span>
+                <div className="tex">\int_0^\pi 2 \cos(\theta) - 3 \sin(\theta) d\theta = \left[ 2 \sin(\theta) + 3 \cos(\theta) \right]_0^\pi = -6</div>
+              </div>
             </div>
           </div>
         </div>

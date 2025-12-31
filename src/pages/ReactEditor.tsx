@@ -1,7 +1,8 @@
 import { useRef, useState, useMemo } from 'react';
-import { Home, FileText } from 'lucide-react';
+import { Home, FileText, Settings } from 'lucide-react';
 import CKEditor4 from '../components/CKEditor4';
 import mathExamples from '../data/mathExamples.json';
+import { mathConfig, MathOutputFormat } from '../config/mathConfig';
 
 interface ReactEditorProps {
   onNavigate: (page: 'landing') => void;
@@ -14,7 +15,18 @@ function ReactEditor({ onNavigate }: ReactEditorProps) {
 
   const [title, setTitle] = useState(randomExample.title);
   const [isLoading, setIsLoading] = useState(true);
+  const [outputFormat, setOutputFormat] = useState<MathOutputFormat>(mathConfig.outputFormat);
   const editorInstanceRef = useRef<any>(null);
+
+  const handleFormatChange = (format: MathOutputFormat) => {
+    mathConfig.outputFormat = format;
+    setOutputFormat(format);
+    if (editorInstanceRef.current) {
+      // Force refresh the editor content or re-render
+      const data = editorInstanceRef.current.getData();
+      editorInstanceRef.current.setData(data);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
@@ -60,6 +72,28 @@ function ReactEditor({ onNavigate }: ReactEditorProps) {
                 placeholder="Enter document title..."
                 className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
               />
+            </div>
+
+            <div className="mb-6 p-4 bg-slate-50 rounded-lg border border-slate-200">
+              <div className="flex items-center gap-2 mb-3 text-slate-700">
+                <Settings className="w-4 h-4" />
+                <span className="font-semibold text-sm">Math Rendering Config (TeXZilla)</span>
+              </div>
+              <div className="flex gap-4">
+                {(['mathlive', 'svg', 'png'] as MathOutputFormat[]).map((format) => (
+                  <label key={format} className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="mathFormat"
+                      value={format}
+                      checked={outputFormat === format}
+                      onChange={() => handleFormatChange(format)}
+                      className="text-blue-600 focus:ring-blue-500"
+                    />
+                    <span className="text-sm capitalize text-slate-600">{format}</span>
+                  </label>
+                ))}
+              </div>
             </div>
 
             <div className="mb-4">
