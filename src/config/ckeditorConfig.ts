@@ -12,7 +12,7 @@ export const ckeditorConfig = {
     contentsCss: [
         'https://cdn.ckeditor.com/4.22.1/standard/contents.css',
         'https://unpkg.com/mathlive@0.95.5/dist/mathlive-static.css',
-        '/ck4-mathlive-io/editor.css'
+        '/ck4-mathlive.github.io/editor.css'
     ],
     toolbar: [
         { name: 'document', items: ['Source'] },
