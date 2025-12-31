@@ -12,8 +12,7 @@ export const openMathDialog = (editor: any, initialLatex = '', targetElement: an
     display: flex;
     align-items: center;
     justify-content: center;            
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    z-index: 10000;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;    
   `;
 
     overlay.innerHTML = `
@@ -23,7 +22,7 @@ export const openMathDialog = (editor: any, initialLatex = '', targetElement: an
           ${targetElement ? 'Update Math' : 'MathLive Editor'}
         </h4>
         <div style="margin-bottom: 20px; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px; background: #f8fafc;">
-          <math-field id="mf" style="width: 100%; font-size: 20px; outline: none; background: transparent;"></math-field>
+          <math-field id="mf" style="width:100%;font-size:22px"></math-field>
         </div>
         <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
             <button id="cancel" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #e2e8f0; background: white; color: #64748b; font-weight: 600; cursor: pointer; transition: all 0.2s;">Cancel</button>
@@ -66,8 +65,16 @@ export const openMathDialog = (editor: any, initialLatex = '', targetElement: an
                 if (newContent) {
                     targetElement.setHtml(newContent.innerHTML);
                     // Update attributes on the actual targetElement in CKEditor
-                    targetElement.setAttribute('class', newContent.className);
-                    targetElement.setAttribute('data-latex', latex);
+                    // targetElement.setAttribute('class', newContent.className);
+                    // targetElement.setAttribute('data-latex', latex);
+                    const mathML: Node = window.TeXZilla.toMathML(latex);
+
+                    const next = targetElement.$.nextSibling;
+
+                    if (next && next.nodeType === Node.ELEMENT_NODE && (next as HTMLElement).tagName.toLowerCase() === 'math') {
+                        next.remove();
+                        targetElement.$.parentNode?.insertBefore(mathML, targetElement.$);
+                    }
                 }
             } else {
                 const renderedHtml = renderLatex(latex);
@@ -78,7 +85,7 @@ export const openMathDialog = (editor: any, initialLatex = '', targetElement: an
                 if (window.MathLive) {
                     import('../config/mathConfig').then(({ mathConfig }) => {
                         if (mathConfig.outputFormat === 'mathlive') {
-                            window.MathLive.renderMathInDocument();
+                            // window.MathLive.renderMathInDocument();
                         }
                     });
                 }

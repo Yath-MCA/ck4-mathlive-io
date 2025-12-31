@@ -27,6 +27,8 @@ export const renderLatex = (latex: string): string => {
         } catch (e) {
             console.error('TeXZilla rendering error:', e);
             return `<span class="math-span">${latex}</span>`;
+        } finally {
+            return `<span class="math-span">${latex}</span>`;
         }
     }
 
