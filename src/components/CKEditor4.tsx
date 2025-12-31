@@ -38,13 +38,17 @@ const CKEditor4 = ({ initialData, onChange, onReady }: CKEditor4Props) => {
 
             // Load MathLive
             if (!window.MathLive) {
-                await import('https://esm.run/mathlive').then((mathlive) => {
-                    window.MathLive = mathlive;
-                    if (mathConfig.outputFormat === 'mathlive') {
-                        mathlive.renderMathInDocument();
-                    }
+                const script = document.createElement('script');
+                script.src = 'https://unpkg.com/mathlive@0.95.5/dist/mathlive.min.js';
+                script.defer = true;
+
+                await new Promise<void>((resolve, reject) => {
+                    script.onload = () => resolve();
+                    script.onerror = reject;
+                    document.head.appendChild(script);
                 });
             }
+
 
 
 
